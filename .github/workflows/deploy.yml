@@ -1,41 +1,47 @@
-name: Deploy React para HostGator
+name: Deploy React (Vite) para HostGator
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
-  group: deploy-production
+  group: deploy-main
   cancel-in-progress: true
 
 jobs:
   build-and-deploy:
-    name: Build e Deploy
+    name: 🏗️ Build & 🚀 Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do codigo
+      - name: 🚚 Get latest code
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
-      - name: Configurar Node.js
+      - name: 📥 Pull LFS files
+        run: git lfs pull
+
+      - name: 🟢 Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
           cache: npm
 
-      - name: Instalar dependencias
+      - name: 📦 Install dependencies
         run: npm ci
 
-      - name: Gerar build de producao
+      - name: 🛠️ Build Project
         run: npm run build
 
-      - name: Enviar arquivos para a HostGator
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 📂 Sync Dist to Host
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: investintermediacao.com/
+          local-dir: dist/
+          server-dir: /investintermediacao.com/
