@@ -1,4 +1,4 @@
-name: Deploy React (Vite) para HostGator
+name: Deploy React para HostGator
 
 on:
   push:
@@ -19,16 +19,11 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: 📥 Pull LFS files
-        run: git lfs pull
 
       - name: 🟢 Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: npm
 
       - name: 📦 Install dependencies
@@ -38,7 +33,7 @@ jobs:
         run: npm run build
 
       - name: 📂 Sync Dist to Host
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}

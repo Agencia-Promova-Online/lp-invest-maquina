@@ -28,7 +28,7 @@ export default function Obrigado() {
                     <CheckCircle size={40} className="text-white" />
                   </div>
                   <h1 className="display-6 fw-bold text-gray-800 mb-3">
-                    Obrigado! Recebemos seus dados
+                    Obrigado! Recebemos seus dados para contato
                   </h1>
                   <p className="fs-5 text-gray-600 mb-4">
                     Em breve, um de nossos vendedores entrará em contato com você por WhatsApp ou e-mail para dar sequência no atendimento.
